@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-    "strings"
+	"strings"
 )
 
 func main() {
@@ -18,19 +18,19 @@ func main() {
 	}
 	addr := args[1]
 
-    parsedUrl, err := url.Parse(addr)
-    if err != nil {
-        fmt.Println("The following error occured", err)
-        return
-    }
+	parsedUrl, err := url.Parse(addr)
+	if err != nil {
+		fmt.Println("The following error occured", err)
+		return
+	}
 
-    splitted := strings.Split(parsedUrl.Path, "/")
-    var pageName string
-    if l := len(splitted); l > 0 {
-        pageName = splitted[l - 1]
-    } else {
-        pageName = "page"
-    }
+	splitted := strings.Split(parsedUrl.Path, "/")
+	var pageName string
+	if l := len(splitted); l > 0 {
+		pageName = splitted[l-1]
+	} else {
+		pageName = "page"
+	}
 
 	tlsConfig := &tls.Config{
 		InsecureSkipVerify: true,
@@ -49,16 +49,16 @@ func main() {
 	}
 	defer resp.Body.Close()
 
-    body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        fmt.Println("The following error occured", err)
-        return
-    }
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("The following error occured", err)
+		return
+	}
 
-    fileName := pageName
-    if !strings.Contains(fileName, ".") {
-        fileName += ".txt"
-    }
+	fileName := pageName
+	if !strings.Contains(fileName, ".") {
+		fileName += ".txt"
+	}
 
-    ioutil.WriteFile(fileName, body, 0600)
+	ioutil.WriteFile(fileName, body, 0600)
 }
