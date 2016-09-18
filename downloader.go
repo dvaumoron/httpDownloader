@@ -57,7 +57,7 @@ func main() {
 
 	fileName := pageName
 	if !strings.Contains(fileName, ".") {
-		fileName += ".txt"
+		fileName += ".html"
 	}
 
 	ioutil.WriteFile(fileName, body, 0600)
