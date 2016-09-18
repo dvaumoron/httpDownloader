@@ -13,14 +13,14 @@ import (
 func main() {
 	args := os.Args
 	if len(args) < 2 {
-		fmt.Println("Please specify adresse")
+		fmt.Println("Please specify address")
 		return
 	}
 	addr := args[1]
 
 	parsedUrl, err := url.Parse(addr)
 	if err != nil {
-		fmt.Println("The following error occured", err)
+		fmt.Println(err)
 		return
 	}
 
@@ -44,14 +44,14 @@ func main() {
 
 	resp, err := client.Get(addr)
 	if err != nil {
-		fmt.Println("The following error occured", err)
+		fmt.Println(err)
 		return
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("The following error occured", err)
+		fmt.Println(err)
 		return
 	}
 
