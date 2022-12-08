@@ -3,7 +3,7 @@ package main
 import (
 	"crypto/tls"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -25,7 +25,7 @@ func main() {
 	}
 
 	splitted := strings.Split(parsedUrl.Path, "/")
-	var pageName string
+	pageName := ""
 	if l := len(splitted); l > 0 {
 		pageName = splitted[l-1]
 	} else {
@@ -49,7 +49,7 @@ func main() {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -60,5 +60,5 @@ func main() {
 		fileName += ".html"
 	}
 
-	ioutil.WriteFile(fileName, body, 0600)
+	os.WriteFile(fileName, body, 0600)
 }
