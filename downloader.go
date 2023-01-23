@@ -24,20 +24,10 @@ func main() {
 		return
 	}
 
-	splitted := strings.Split(parsedUrl.Path, "/")
-	pageName := ""
-	if l := len(splitted); l > 0 {
-		pageName = splitted[l-1]
-	} else {
-		pageName = "page"
-	}
-
-	tlsConfig := &tls.Config{
-		InsecureSkipVerify: true,
-	}
-
 	transport := &http.Transport{
-		TLSClientConfig: tlsConfig,
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true,
+		},
 	}
 
 	client := http.Client{Transport: transport}
@@ -55,10 +45,13 @@ func main() {
 		return
 	}
 
-	fileName := pageName
+	splitted := strings.Split(parsedUrl.Path, "/")
+	fileName := "page"
+	if l := len(splitted); l != 0 {
+		fileName = splitted[l-1]
+	}
 	if !strings.Contains(fileName, ".") {
 		fileName += ".html"
 	}
-
 	os.WriteFile(fileName, body, 0600)
 }
