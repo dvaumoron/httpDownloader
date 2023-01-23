@@ -16,21 +16,21 @@ func main() {
 		fmt.Println("Please specify address")
 		return
 	}
-	addr := args[1]
 
+	addr := args[1]
 	parsedUrl, err := url.Parse(addr)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: true,
+	client := http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: true,
+			},
 		},
 	}
-
-	client := http.Client{Transport: transport}
 
 	resp, err := client.Get(addr)
 	if err != nil {
